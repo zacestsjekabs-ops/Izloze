@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="UTF-8">
+<title>Izloze - Apsveicamais</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; }
+h2 { color: #2a7ae2; }
+#result { font-weight: bold; margin-top: 20px; color: green; font-size: 18px; }
+</style>
+</head>
+<body>
+<h2>Izloze: uzzini, kuru apsveikt!</h2>
+<p id="result"></p>
+
+<script>
+// Dalībnieku saraksts ar unikāliem kodiem
+const participants = [
+    {name: "Armands", code: "A1B2C3"},
+    {name: "Gunita", code: "D4E5F6"},
+    {name: "Daniels", code: "G7H8I9"},
+    {name: "Toms", code: "J1K2L3"},
+    {name: "Jēkabs", code: "M4N5O6"},
+    {name: "Līva", code: "P7Q8R9"},
+    {name: "Daumants", code: "S1T2U3"},
+    {name: "Bruno", code: "V4W5X6"},
+    {name: "Jančuks", code: "Y7Z8A1"},
+    {name: "Intars", code: "B2C3D4"},
+    {name: "Inta", code: "E5F6G7"},
+    {name: "Gunārs", code: "H8I9J1"}
+];
+
+// Nolasām kodu no URL
+function getCodeFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("code");
+}
+
+function drawForParticipant() {
+    const code = getCodeFromURL();
+    const participant = participants.find(p => p.code === code);
+
+    if (!participant) {
+        document.getElementById("result").innerText = "Nepareizs vai nezināms kods!";
+        return;
+    }
+
+    // Izvelk nejaušu apsveicamo, izņemot pašu dalībnieku
+    const options = participants.filter(p => p.name !== participant.name);
+    const selected = options[Math.floor(Math.random() * options.length)];
+
+    document.getElementById("result").innerText = `Tev jāsveicina: ${selected.name}!`;
+}
+
+drawForParticipant();
+</script>
+</body>
+</html>
